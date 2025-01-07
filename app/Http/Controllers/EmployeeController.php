@@ -19,7 +19,8 @@ class EmployeeController extends Controller
         ->where(function ($queryBuilder) use ($query) {
             if ($query) {
                 $queryBuilder->where('first_name', 'like', '%' . $query . '%')
-                             ->orWhere('last_name', 'like', '%' . $query . '%');
+                             ->orWhere('last_name', 'like', '%' . $query . '%')
+                             ->orWhere('emp_no', 'like', '%' . $query . '%');
             }
         })
         ->orderBy($sortField, $sortOrder) // เพิ่มการจัดเรียง
