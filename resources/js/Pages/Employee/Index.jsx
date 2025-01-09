@@ -17,6 +17,7 @@ export default function Index({ employees, query, sortField, sortOrder }) {
     setSearch(query || '');
   }, [query]);
 
+  //async คือคีย์เวิร์ดที่ใช้ในการประกาศฟังก์ชัน การดำเนินการที่ไม่ต้องรอให้กระบวนการหนึ่งเสร็จสิ้น
   // ฟังก์ชันสำหรับจัดการการส่งฟอร์มค้นหา
   const handleSearch = async (e) => {
     e.preventDefault();
@@ -42,6 +43,7 @@ export default function Index({ employees, query, sortField, sortOrder }) {
   };
 
   return (
+
     <div className="container mx-auto p-6 bg-gray-800 text-white">
       {loading && (
         <div className="flex justify-center items-center text-xl mb-4">
@@ -114,7 +116,7 @@ export default function Index({ employees, query, sortField, sortOrder }) {
         </tbody>
       </table>
 
-      {/* Pagination Controls */}
+      {/* Pagination Controls  */}
       <div className="flex justify-center space-x-2 mt-6">
         {/* Previous Button */}
         {employees.prev_page_url && (
@@ -136,6 +138,7 @@ export default function Index({ employees, query, sortField, sortOrder }) {
             startPage = Math.max(endPage - maxVisiblePages + 1, 1);
           }
 
+          // สร้างปุ่มเลขหน้า โดยใช้ Array.from และ map ในการสร้าง array ของปุ่ม
           return Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i).map(
             (page) => (
               <button
