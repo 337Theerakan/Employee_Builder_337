@@ -11,23 +11,28 @@ class EmployeeController extends Controller
 
     public function index(Request $request)
 {
-    $query = $request->input('search'); // รับค่าค้นหา
+    // รับค่าจาก query string ที่ส่งมาจากหน้าจอ (หน้าจอจะส่งค่า search, sortField, sortOrder)
+    $query = $request->input('search');
     $sortField = $request->input('sortField', 'emp_no'); // คอลัมน์ที่จะจัดเรียง (ค่าเริ่มต้น emp_no)
     $sortOrder = $request->input('sortOrder', 'asc'); // ทิศทางการจัดเรียง (ค่าเริ่มต้น asc)
 
     $employees = DB::table("employees")
         ->where(function ($queryBuilder) use ($query) {
             if ($query) {
-                $queryBuilder->where('first_name', 'like', '%' . $query . '%')
+                $queryBuilder
+                // ค้นหาจากชื่อ นามสกุล และรหัสพนักงาน ถ
+                            ->where('first_name', 'like', '%' . $query . '%')
                              ->orWhere('last_name', 'like', '%' . $query . '%')
                              ->orWhere('emp_no', 'like', '%' . $query . '%');
             }
         })
         ->orderBy($sortField, $sortOrder) // เพิ่มการจัดเรียง
         ->paginate(10);
-
+// ส่งข้อมูลไปที่หน้าจอพร้อมกับค่า query, sortField และ sortOrder
     return Inertia::render('Employee/Index', [
+        // ส่งข้อมูลไปที่หน้าจอพร้อมกับค่า query, sortField และ sortOrder
         'employees' => $employees,
+        // ส่งข้อมูลไปที่หน้าจอพร้อมกับค่า query, sortField และ sortOrder
         'query' => $query,
         'sortField' => $sortField,
         'sortOrder' => $sortOrder,
