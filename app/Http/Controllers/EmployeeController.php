@@ -23,7 +23,7 @@ class EmployeeController extends Controller
                 // ค้นหาจากชื่อ นามสกุล และรหัสพนักงาน ถ
                             ->where('first_name', 'like', '%' . $query . '%')
                              ->orWhere('last_name', 'like', '%' . $query . '%')
-                             ->orWhere('emp_no', 'like', '%' . $query . '%');
+                             ->orWhere('emp_no', $query);
             }
         })
         ->orderBy($sortField, $sortOrder) // เพิ่มการจัดเรียง

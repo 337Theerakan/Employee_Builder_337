@@ -30,10 +30,11 @@ export default function Index({ employees, query, sortField, sortOrder }) {
     const newOrder = sort.field === field && sort.order === 'asc' ? 'desc' : 'asc';
     setSort({ field, order: newOrder });
     setLoading(true);
+    {/* ส่งค่าการจัดเรียงใหม่ไปยังเซิร์ฟเวอร์ และรีเซ็ตหน้าเป็นหน้าที่ 1*/ }
     await router.get('/employee', { search, sortField: field, sortOrder: newOrder });
     setLoading(false);
   };
-
+//await เป็นคำสั่งใน JavaScript ที่ใช้ภายในฟังก์ชันที่ประกาศด้วย async 
   const handlePagination = async (page) => {
     setLoading(true);
     await router.get('/employee', { search, page, sortField: sort.field, sortOrder: sort.order });
