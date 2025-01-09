@@ -2,14 +2,22 @@ import { router } from '@inertiajs/react';
 import { useState, useEffect } from 'react';
 
 export default function Index({ employees, query, sortField, sortOrder }) {
+
+  // สถานะสำหรับการค้นหา
   const [search, setSearch] = useState('');
+
+  // สถานะสำหรับฟิลด์และลำดับการจัดเรียง
   const [sort, setSort] = useState({ field: sortField || 'emp_no', order: sortOrder || 'asc' });
+
+  // สถานะสำหรับการโหลด
   const [loading, setLoading] = useState(false);
 
+  // ใช้ effect เพื่อกำหนดค่าการค้นหาตาม prop query
   useEffect(() => {
     setSearch(query || '');
   }, [query]);
 
+  // ฟังก์ชันสำหรับจัดการการส่งฟอร์มค้นหา
   const handleSearch = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -17,6 +25,7 @@ export default function Index({ employees, query, sortField, sortOrder }) {
     setLoading(false);
   };
 
+  // ฟังก์ชันสำหรับจัดการการจัดเรียงตามฟิลด์
   const handleSort = async (field) => {
     const newOrder = sort.field === field && sort.order === 'asc' ? 'desc' : 'asc';
     setSort({ field, order: newOrder });
@@ -86,7 +95,7 @@ export default function Index({ employees, query, sortField, sortOrder }) {
           {employees.data.length === 0 ? (
             <tr>
               <td colSpan="6" className="text-center py-4 text-gray-500">
-                No employees found. Try a different search term.
+                บ่มีข้อมูล
               </td>
             </tr>
           ) : (
